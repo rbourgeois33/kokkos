@@ -97,6 +97,7 @@ kokkos_arch_option(BLACKWELL100 GPU "NVIDIA Blackwell generation CC 10.0" "KOKKO
 kokkos_arch_option(BLACKWELL103 GPU "NVIDIA Blackwell generation CC 10.3" "KOKKOS_SHOW_CUDA_ARCHS")
 kokkos_arch_option(BLACKWELL120 GPU "NVIDIA Blackwell generation CC 12.0" "KOKKOS_SHOW_CUDA_ARCHS")
 kokkos_arch_option(BLACKWELL121 GPU "NVIDIA Blackwell generation CC 12.1" "KOKKOS_SHOW_CUDA_ARCHS")
+kokkos_arch_option(NEW GPU "AMD MI200 generation CC 8.0" "KOKKOS_SHOW_CUDA_ARCHS")
 
 if(Kokkos_ENABLE_HIP OR Kokkos_ENABLE_OPENACC OR Kokkos_ENABLE_SYCL)
   set(KOKKOS_SHOW_HIP_ARCHS ON)
@@ -1041,6 +1042,8 @@ check_cuda_arch(BLACKWELL100 sm_100)
 check_cuda_arch(BLACKWELL103 sm_103)
 check_cuda_arch(BLACKWELL120 sm_120)
 check_cuda_arch(BLACKWELL121 sm_121)
+check_cuda_arch(NEW sm_80)
+
 
 set(AMDGPU_ARCH_ALREADY_SPECIFIED "")
 function(CHECK_AMDGPU_ARCH ARCH FLAG)
@@ -1331,6 +1334,10 @@ if(KOKKOS_ARCH_BLACKWELL100
    OR KOKKOS_ARCH_BLACKWELL121
 )
   set(KOKKOS_ARCH_BLACKWELL ON)
+endif()
+
+if (KOKKOS_ARCH_NEW)
+  set(KOKKOS_ARCH_NEW ON)
 endif()
 
 function(CHECK_AMD_APU ARCH)

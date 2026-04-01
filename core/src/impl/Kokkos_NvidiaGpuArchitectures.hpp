@@ -38,6 +38,8 @@
 #define KOKKOS_IMPL_ARCH_NVIDIA_GPU 120
 #elif defined(KOKKOS_ARCH_BLACKWELL121)
 #define KOKKOS_IMPL_ARCH_NVIDIA_GPU 121
+#elif defined(KOKKOS_ARCH_NEW)
+#define KOKKOS_IMPL_ARCH_NVIDIA_NEW 80
 #elif defined(KOKKOS_ENABLE_CUDA)
 // do not raise an error on other backends that may run on NVIDIA GPUs such as
 // OpenACC, or SYCL
