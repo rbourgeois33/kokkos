@@ -493,8 +493,9 @@ void Cuda::impl_initialize(InitializationSettings const &settings) {
   Impl::CudaInternal::m_cudaArch = Impl::cuda_kernel_arch(cuda_device_id);
 
   if (Impl::CudaInternal::m_cudaArch == 0) {
-    Kokkos::abort(
-        "Kokkos::Cuda::initialize ERROR: likely mismatch of architecture\n");
+    std::cerr<<
+        "Kokkos::Cuda::initialize ERROR: likely mismatch of architecture\n"<<std::endl;
+    std::cerr<< "JK ! This is expected using scale"<<std::endl;
   }
 
   int compiled_major = Impl::CudaInternal::m_cudaArch / 100;
@@ -510,7 +511,7 @@ void Cuda::impl_initialize(InitializationSettings const &settings) {
        << " on device with compute capability " << cudaProp.major << "."
        << cudaProp.minor << " is not supported by CUDA!\n";
     std::string msg = ss.str();
-    Kokkos::abort(msg.c_str());
+    std::cerr<<msg.c_str()<<std::endl;
   }
   if (Kokkos::show_warnings() &&
       (compiled_major != cudaProp.major || compiled_minor != cudaProp.minor)) {
