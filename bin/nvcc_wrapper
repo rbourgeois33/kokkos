@@ -27,7 +27,7 @@ if [ ! -z $CUDA_ROOT ]; then
   nvcc_compiler="$CUDA_ROOT/bin/nvcc"
 fi
 
-#host_compiler="icpc"
+host_compiler=/volatile/catA/rb263871/scale-1.6.1-Linux/llvm/bin/clang++
 #host_compiler="/usr/local/gcc/4.8.3/bin/g++"
 #host_compiler="/usr/local/gcc/4.9.1/bin/g++"
 
@@ -468,8 +468,11 @@ do
     ;;
   #Handle args that should be sent to the linker
   -Wl,*)
-    xlinker_args="$xlinker_args -Xlinker ${1:4:${#1}}"
-    host_linker_args="$host_linker_args ${1:4:${#1}}"
+    wl_args="${1:4:${#1}}"
+    IFS=',' read -ra wl_tokens <<< "$wl_args"
+    for token in "${wl_tokens[@]}"; do
+        xlinker_args="$xlinker_args -Xlinker $token"
+    done
     ;;
   #Handle host assembler options
   -Wa,*)
