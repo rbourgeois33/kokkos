@@ -124,8 +124,9 @@ TEST_F(TEST_CATEGORY_FIXTURE(GraphInterOp), instantiation_flags) {
   graph->instantiate();
   unsigned long long flags =
       Kokkos::Experimental::finite_max_v<unsigned long long>;
-  KOKKOS_IMPL_CUDA_SAFE_CALL(
-      cudaGraphExecGetFlags(graph->native_graph_exec(), &flags));
+  //Un-supported by Scale
+  //KOKKOS_IMPL_CUDA_SAFE_CALL(
+  //    cudaGraphExecGetFlags(graph->native_graph_exec(), &flags));
 
   ASSERT_EQ(flags, 0u);
 #endif

@@ -18,6 +18,8 @@
 
 #include <Cuda/Kokkos_Cuda.hpp>
 
+#include <Kokkos_Abort.hpp> 
+
 namespace Kokkos {
 namespace Impl {
 
@@ -66,9 +68,10 @@ struct GraphNodeCaptureImpl<Kokkos::Cuda, Functor> {
 
     KOKKOS_IMPL_CUDA_SAFE_CALL(
         cudaStreamEndCapture(exec.cuda_stream(), &captured_subgraph));
-
-    KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphAddChildGraphNode(
-        &m_node, graph, nullptr, 0, captured_subgraph));
+    
+      Kokkos::abort("cudaGraphAddChildGraphNode is not yet supported by scale");
+    //KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphAddChildGraphNode(
+    //    &m_node, graph, nullptr, 0, captured_subgraph));
   }
 };
 
