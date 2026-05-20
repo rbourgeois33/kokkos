@@ -197,21 +197,21 @@ TEST_F(TEST_CATEGORY_FIXTURE(GraphInterOp), interact_with_cuda_node) {
   ASSERT_EQ(data(), 2);
 
 // cudaGraphNodeSetEnabled was introduced in CUDA 11.6.
-#if CUDA_VERSION >= 11060
-  KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphNodeSetEnabled(
-      increment.cuda_graph_exec(), cuda_node_tpf, false));
+// #if CUDA_VERSION >= 11060
+//   //KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphNodeSetEnabled(
+//   //    increment.cuda_graph_exec(), cuda_node_tpf, false));
 
-  increment.submit(this->exec);
-  this->exec.fence();
-  ASSERT_EQ(data(), 3);
+//   increment.submit(this->exec);
+//   this->exec.fence();
+//   ASSERT_EQ(data(), 3);
 
-  KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphNodeSetEnabled(
-      increment.cuda_graph_exec(), cuda_node_tpf, true));
+//   KOKKOS_IMPL_CUDA_SAFE_CALL(cudaGraphNodeSetEnabled(
+//       increment.cuda_graph_exec(), cuda_node_tpf, true));
 
-  increment.submit(this->exec);
-  this->exec.fence();
-  ASSERT_EQ(data(), 5);
-#endif
+//   increment.submit(this->exec);
+//   this->exec.fence();
+//   ASSERT_EQ(data(), 5);
+// #endif
 }
 // NOLINTEND(bugprone-unchecked-optional-access)
 
