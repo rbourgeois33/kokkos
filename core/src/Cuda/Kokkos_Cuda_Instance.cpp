@@ -12,11 +12,7 @@
 #ifdef KOKKOS_ENABLE_CUDA
 
 #include <Kokkos_Macros.hpp>
-#ifdef KOKKOS_ENABLE_EXPERIMENTAL_CXX20_MODULES
-import kokkos.core;
-#else
 #include <Kokkos_Core.hpp>
-#endif
 
 // #include <Cuda/Kokkos_Cuda_Error.hpp>
 // #include <Cuda/Kokkos_Cuda_BlockSize_Deduction.hpp>
@@ -288,6 +284,11 @@ CudaInternal::CudaInternal(cudaStream_t stream) : m_stream(stream) {
   if (!constantMemReusablePerDevice[m_cudaDev])
     KOKKOS_IMPL_CUDA_SAFE_CALL(cuda_event_create_with_flags_wrapper(
         &constantMemReusablePerDevice[m_cudaDev], cudaEventDisableTiming));
+
+  // Accessing the mutex (for constant memory launch) through
+  // std::map::operator[] will ensure the mutex is default constructed (and
+  // initialized)
+  constantMemMutexPerDevice[m_cudaDev];
 
   //----------------------------------
   // Multiblock reduction uses scratch flags for counters
